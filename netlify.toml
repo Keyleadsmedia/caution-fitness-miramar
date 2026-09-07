@@ -1,0 +1,10 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+# The function source carries no secrets (the Notion token is an env var),
+# but there is no reason to serve it.
+[[headers]]
+  for = "/netlify/*"
+  [headers.values]
+    X-Robots-Tag = "noindex"
