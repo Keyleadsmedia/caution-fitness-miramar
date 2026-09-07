@@ -60,7 +60,8 @@ exports.handler = async (event) => {
   if (text(d.phone)) properties.Phone = { phone_number: text(d.phone) };
   if (rich(d.message)) properties.Message = rich(d.message);
   if (interest) properties['Service Interest'] = rich(interest);
-  if (/^https?:\/\//i.test(referrer)) properties['Source Page'] = { url: referrer };
+  const sourcePage = text(d.pageUrl) || referrer;
+  if (/^https?:\/\//i.test(sourcePage)) properties['Source Page'] = { url: sourcePage };
 
   try {
     const res = await fetch('https://api.notion.com/v1/pages', {

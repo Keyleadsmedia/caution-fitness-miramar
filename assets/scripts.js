@@ -43,6 +43,11 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('[data-reveal]').forEach(el => el.classList.add('is-revealed'));
   }
 
+  // Record which page converted, so Source Page in Client Leads is the
+  // actual page rather than the site root Netlify reports by default.
+  var pageUrlField = document.getElementById('pageUrl');
+  if (pageUrlField) pageUrlField.value = window.location.href;
+
   // NOTE: forms submit natively to Netlify. Do not preventDefault here —
   // the previous template faked a success message and silently dropped every lead.
 });
