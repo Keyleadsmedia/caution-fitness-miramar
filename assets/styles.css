@@ -267,3 +267,26 @@ table.schedule td:first-child { font-weight: 600; }
   .stats-bar_inner { padding: 1.75rem 1rem; }
   .legal { padding: 2.5rem 1.25rem; }
 }
+
+/* --- Cookie consent banner (Key Leads Media) --- */
+.klm-consent{position:fixed;left:0;right:0;bottom:0;z-index:9999;display:none;
+  background:#111;color:#e8e8e8;border-top:1px solid rgba(255,255,255,.14);
+  box-shadow:0 -6px 24px rgba(0,0,0,.28)}
+.klm-consent.is-open{display:block}
+.klm-consent__in{max-width:1100px;margin:0 auto;padding:1rem 1.25rem;display:flex;
+  gap:1.25rem;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.klm-consent__text{margin:0;font-size:.85rem;line-height:1.55;max-width:70ch}
+.klm-consent__text a{color:#fff;text-decoration:underline;text-underline-offset:2px}
+.klm-consent__btns{display:flex;gap:.6rem;flex-shrink:0}
+.klm-consent__btn{font:inherit;font-size:.82rem;font-weight:600;letter-spacing:.02em;
+  padding:.6rem 1.15rem;border-radius:6px;cursor:pointer;border:1px solid transparent;
+  white-space:nowrap}
+.klm-consent__btn--ghost{background:transparent;color:#e8e8e8;border-color:rgba(255,255,255,.35)}
+.klm-consent__btn--ghost:hover{border-color:#fff;color:#fff}
+.klm-consent__btn--solid{background:#fff;color:#111}
+.klm-consent__btn--solid:hover{background:#e6e6e6}
+@media (max-width:640px){
+  .klm-consent__in{flex-direction:column;align-items:stretch;gap:.85rem;padding:1rem}
+  .klm-consent__btns{justify-content:stretch}
+  .klm-consent__btn{flex:1}
+}

@@ -173,7 +173,7 @@
         </div>
       </div>
       <div class="footer-legal">
-        <a href="privacy.html">Privacy Policy</a><span aria-hidden="true">&middot;</span><a href="terms.html">Terms &amp; Conditions</a>
+        <a href="privacy.html">Privacy Policy</a><span aria-hidden="true">&middot;</span><a href="terms.html">Terms &amp; Conditions</a><span aria-hidden="true">&middot;</span><a href="#" onclick="klmConsent.open();return false;">Cookie settings</a>
       </div>
       <div class="footer_bottom">
         <p>Business name, address, phone number, programs and class times shown here are publicly listed information about Caution CrossFit &amp; Fitness.</p>
@@ -182,5 +182,10 @@
     </div>
   </footer>
   <script src="assets/scripts.js"></script>
+<!-- Tracker config. Fill these in from the Notion Opportunity at handoff.
+     Leave a value empty and that tracker does not exist for this site.
+     consent.js loads NOTHING until the visitor accepts. -->
+<script>window.KLM_TRACKING={ga4:"",metaPixel:"",metricool:""};</script>
+<script src="assets/consent.js" defer></script>
 </body>
 </html>
