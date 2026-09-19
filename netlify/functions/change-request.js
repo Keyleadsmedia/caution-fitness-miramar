@@ -16,6 +16,8 @@
 //   SITE_KEY                     the `Site` select value for this site
 //   REPO_NAME                    GitHub repo under Keyleadsmedia
 //   NETLIFY_SITE_ID              this site's Netlify id
+//   HOSTING_TIER                 '$75 Hosting' | '$150 Hosting + Support'
+//                                | '$350 Unlimited + Priority' | 'None'
 // Optional:
 //   NOTION_CHANGE_REQUESTS_DB    defaults to the id below
 
@@ -84,6 +86,11 @@ exports.handler = async (event) => {
   if (text(d.email)) properties['Submitted By'] = { email: text(d.email) };
   if (rich(process.env.REPO_NAME)) properties.Repo = rich(process.env.REPO_NAME);
   if (rich(process.env.NETLIFY_SITE_ID)) properties['Netlify Site ID'] = rich(process.env.NETLIFY_SITE_ID);
+
+  // The tier decides whether the processing run acts, counts, or quotes.
+  const TIERS = ['$75 Hosting', '$150 Hosting + Support', '$350 Unlimited + Priority', 'None'];
+  const tier = text(process.env.HOSTING_TIER);
+  if (TIERS.includes(tier)) properties['Hosting Tier'] = { select: { name: tier } };
 
   const sourcePage = text(d.pageUrl) || referrer;
   if (/^https?:\/\//i.test(sourcePage)) properties['Source Page'] = { url: sourcePage };
