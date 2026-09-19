@@ -290,3 +290,12 @@ table.schedule td:first-child { font-weight: 600; }
   .klm-consent__btns{justify-content:stretch}
   .klm-consent__btn{flex:1}
 }
+
+/* Sit above everything, including third-party floating widgets. */
+.klm-consent{z-index:2147483647}
+/* Hold back the chat widget while a cookie choice is pending: it floats
+   bottom-right, intercepts the clicks meant for Accept/Decline, and should
+   not collect a phone number before the visitor has answered. */
+html.klm-consent-open chat-widget,
+html.klm-consent-open #chat-widget,
+html.klm-consent-open [id^="lc_text-widget"]{display:none!important}

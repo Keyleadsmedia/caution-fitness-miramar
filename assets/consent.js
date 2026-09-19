@@ -111,8 +111,18 @@
     document.body.appendChild(el);
     return el;
   }
-  function show() { build().classList.add('is-open'); }
-  function hide() { if (el) el.classList.remove('is-open'); }
+  function show() {
+    build().classList.add('is-open');
+    // The GHL chat widget floats bottom-right with a very high z-index and
+    // swallows clicks aimed at the Accept/Decline buttons. Hold it back until
+    // a choice is made. It also should not be able to take a phone number
+    // before the visitor has answered the cookie question.
+    document.documentElement.classList.add('klm-consent-open');
+  }
+  function hide() {
+    if (el) el.classList.remove('is-open');
+    document.documentElement.classList.remove('klm-consent-open');
+  }
 
   /* ---------- decide ---------- */
   function start() {
