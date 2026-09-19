@@ -87,11 +87,22 @@
         </div>
 
         <div class="form-group">
+          <label for="assets" class="form-label">Link To Photos Or Files <span style="font-weight:400;text-transform:none;letter-spacing:0;opacity:.7">(optional)</span></label>
+          <input class="form-input" type="url" id="assets" name="assets" inputmode="url"
+                 placeholder="https://drive.google.com/...">
+          <p style="font-size:.82rem;line-height:1.5;margin:.5rem 0 0;opacity:.75">
+            Put the images in a Google Drive folder and paste the share link.
+            <strong>Set it to &ldquo;Anyone with the link can view&rdquo;</strong> or we will not be able to open it.
+            Dropbox and similar links work too.
+          </p>
+        </div>
+
+        <div class="form-group">
           <label for="priority" class="form-label">Priority</label>
           <select id="priority" name="priority" class="form-select">
-            <option value="Normal">Normal &mdash; next scheduled run</option>
-            <option value="Urgent">Urgent &mdash; something is wrong or wrong information is public</option>
-            <option value="Low">Low &mdash; whenever you get to it</option>
+            <option value="Urgent">Urgent</option>
+            <option value="Normal" selected>Normal</option>
+            <option value="Low">Low</option>
           </select>
         </div>
 

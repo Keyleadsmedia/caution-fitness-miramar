@@ -92,6 +92,11 @@ exports.handler = async (event) => {
   const tier = text(process.env.HOSTING_TIER);
   if (TIERS.includes(tier)) properties['Hosting Tier'] = { select: { name: tier } };
 
+  // Photos and files come in as a shared link, usually Google Drive.
+  // The processing run has to be able to open it anonymously, so a restricted
+  // link is a Needs You rather than something to guess around.
+  if (/^https?:\/\//i.test(text(d.assets))) properties['Assets Link'] = { url: text(d.assets) };
+
   const sourcePage = text(d.pageUrl) || referrer;
   if (/^https?:\/\//i.test(sourcePage)) properties['Source Page'] = { url: sourcePage };
 
