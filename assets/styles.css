@@ -299,3 +299,5 @@ table.schedule td:first-child { font-weight: 600; }
 html.klm-consent-open chat-widget,
 html.klm-consent-open #chat-widget,
 html.klm-consent-open [id^="lc_text-widget"]{display:none!important}
+
+.klm-consent__state{color:#fff;font-weight:600}

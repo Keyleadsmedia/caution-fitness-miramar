@@ -96,7 +96,7 @@
     el.setAttribute('aria-label', 'Cookie choices');
     el.innerHTML =
       '<div class="klm-consent__in">' +
-        '<p class="klm-consent__text">We use cookies to measure how this site is used and how our advertising performs. ' +
+        '<p class="klm-consent__text"><span class="klm-consent__state"></span>We use cookies to measure how this site is used and how our advertising performs. ' +
         'Nothing is loaded until you choose. See our <a href="privacy.html">Privacy Policy</a>.</p>' +
         '<div class="klm-consent__btns">' +
           '<button type="button" class="klm-consent__btn klm-consent__btn--ghost" data-klm="decline">Decline</button>' +
@@ -105,14 +105,33 @@
       '</div>';
     el.addEventListener('click', function (ev) {
       var a = ev.target.getAttribute && ev.target.getAttribute('data-klm');
-      if (a === 'accept') { write('accept'); injectTrackers(); hide(); }
-      if (a === 'decline') { write('decline'); hide(); }
+      if (a !== 'accept' && a !== 'decline') return;
+      var prior = read();
+      var changed = prior && prior.choice !== a;
+      write(a);
+      if (a === 'accept' && !changed) { injectTrackers(); hide(); return; }
+      hide();
+      // Going from accept to decline cannot unload a script that already ran,
+      // and going from decline to accept needs a clean page to fire PageView.
+      // Reload so the stored choice is what the page actually does.
+      if (changed) { location.reload(); return; }
+      if (a === 'accept') injectTrackers();
     });
     document.body.appendChild(el);
     return el;
   }
   function show() {
-    build().classList.add('is-open');
+    var node = build();
+    var prior = read();
+    var line = node.querySelector('.klm-consent__state');
+    if (line) {
+      line.textContent = prior
+        ? (prior.choice === 'accept'
+            ? 'You currently allow these cookies. '
+            : 'You currently decline these cookies. ')
+        : '';
+    }
+    node.classList.add('is-open');
     // The GHL chat widget floats bottom-right with a very high z-index and
     // swallows clicks aimed at the Accept/Decline buttons. Hold it back until
     // a choice is made. It also should not be able to take a phone number
@@ -125,7 +144,18 @@
   }
 
   /* ---------- decide ---------- */
+  function syncLinks() {
+    // A "Cookie settings" link that opens nothing is worse than no link.
+    var links = document.querySelectorAll('.klm-consent-link');
+    for (var i = 0; i < links.length; i++) {
+      links[i].style.display = hasTrackers ? '' : 'none';
+      var sep = links[i].previousElementSibling;
+      if (!hasTrackers && sep && sep.getAttribute('aria-hidden') === 'true') sep.style.display = 'none';
+    }
+  }
+
   function start() {
+    syncLinks();
     if (!hasTrackers) return;                 // nothing to consent to
 
     // Global Privacy Control is a legal opt-out signal in 12 states. Treat it as a decline.
